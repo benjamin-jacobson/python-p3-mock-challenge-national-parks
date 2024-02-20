@@ -33,6 +33,10 @@ class NationalPark:
         visitors = [t.visitor for t in self.trips()]
         return max(set(visitors), key=visitors.count)
 
+    @classmethod
+    def most_visited(cls):
+        '''Returns the NationalPark instance with the most visits.Returns None if there are no visits.'''
+        return max(cls.all, key=lambda park: park.total_visits())
 
 class Trip:
     all = []
@@ -107,8 +111,11 @@ class Visitor:
             Returns the total number of times a visitor visited the park passed in as argument
             Returns 0 if the visitor has never visited the park
         '''
-        x = [i for i in self.all if i.national_park is park]
-        if x == []:
+        # x = [i for i in self.all if i.national_park is park]
+        # if x == []:
+        #     return 0
+        # else:
+        #     return len(x)
+        if not park.visitors():
             return 0
-        else:
-            return len(x)
+        return len([t for t in self.trips() if trip.national_park == park])
